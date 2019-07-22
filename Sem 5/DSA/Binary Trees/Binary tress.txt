@@ -1,0 +1,323 @@
+Full Binary Tree A Binary Tree is full if every node has 0 or 2 children. Following are examples of full binary tree. We can also say a full binary tree is a binary tree in which all nodes except leaves have two children.
+             18
+           /    \   
+         15     20    
+        /  \       
+      40    50   
+    /   \
+   30   50
+Complete Binary Tree: A Binary Tree is complete Binary Tree if all levels are completely filled except possibly the last level and the last level has all keys as left as possible
+               18
+           /       \  
+         15         30  
+        /  \        /  \
+      40    50    100   40
+     /  \   /
+    8   7  9
+
+Perfect Binary Tree A Binary tree is Perfect Binary Tree in which all internal nodes have two children and all leaves are at same level.
+               18
+           /       \  
+         15         30  
+        /  \        /  \
+      40    50    100   40
+
+
+               18
+           /       \  
+         15         30
+
+------------------------------------------------TREE Traversal
+
+A Tree is typically traversed in two ways:
+
+1)-Breadth First Traversal (Or Level Order Traversal)
+2)-Depth First Traversals
+	Inorder Traversal (Left-Root-Right)
+	Preorder Traversal (Root-Left-Right)
+	Postorder Traversal (Left-Right-Root)
+
+
+------------------------------------------------BST creation, insertion, traversal printing
+
+#include<iostream>
+using namespace std;
+
+
+struct node
+{
+	int key;
+	node *left;
+	node *right;
+}*root=NULL;
+
+node *insert(node *rootnode , int data)
+{
+	if(rootnode==NULL)
+	{
+		node *newnode = new node;
+		newnode->key=data;
+		newnode->left=NULL;
+		newnode->right=NULL;
+		return newnode;
+	}
+	else
+	{
+		if(data>rootnode->key)
+		{
+			rootnode->right= insert(rootnode->right, data);
+		}
+		else
+		{
+			rootnode->left=insert(rootnode->left, data);
+		}
+		return rootnode;
+	}
+}
+
+void Preorder(node *root)
+{
+	if (root == NULL)
+		return;
+	cout<<root->key<<endl;
+	Preorder(root->left);
+	Preorder(root->right);	
+	
+	
+}
+
+void Inorder(node *node)
+{
+	if (node==NULL)
+		return;
+	Inorder(node->left);
+	cout<<node->key<<endl;
+	Inorder(node->right);
+	
+}
+
+void Postorder(node *node)
+{
+	if (node==NULL)
+		return;
+	Postorder(node->left);
+	Postorder(node->right);
+	cout<<node->key<<endl;
+	
+}
+
+int main()
+{
+	for(int i=0;i<5;i++)
+	{
+		int data;
+		cin>>data;
+		root = insert(root , data);
+		cout<<"inserted"<<endl;
+	}
+cout<<root->key;	
+Preorder(root);
+cout<<endl;
+Inorder(root);
+cout<<endl;
+Postorder(root);
+
+
+return 0;
+}
+
+
+-------------------------------------------------------Searching in BST
+
+int flag =0;
+void search(node *rootnode, int data)
+{
+	
+	if (rootnode==NULL)
+	{
+		//cout<<"Not found"<<endl;
+		return;
+	}
+	else
+	{
+		if(data==rootnode->key)
+		{	
+			
+			flag++;
+			//cout<<"Found"<<endl;
+			return;
+		}
+		else if (data > rootnode->key)
+		{
+			search(rootnode->right , data);
+		}
+		else if (data < rootnode->key)
+		{
+			search(rootnode->left ,data);
+		}
+		
+	}
+	
+	
+}
+int main()
+{
+	for(int i=0;i<5;i++)
+	{
+		int data;
+		cin>>data;
+		root = insert(root , data);
+		cout<<"inserted"<<endl;
+	}
+
+int Data;
+cout<<"Enter element to search"<<endl;
+cin>>Data;
+search(root , Data);
+
+if(flag==0)
+{
+	cout<<"Not found"<<endl;
+}
+else
+{
+	cout<<"Found"<<endl;
+}
+return 0;
+}
+
+
+-----------------------------------------------------Find Min in BST
+
+
+node *FindMin(node *startnode)
+{
+	if (startnode->left == NULL)
+	{
+		return startnode;
+	}
+	else
+	{
+		return FindMin(startnode->left);
+		
+	}
+}
+
+
+int main()
+{
+	node *Min = FindMin(root);
+	cout<<"Min element = "<<Min->key;
+
+return 0;
+}
+
+
+------------------------------------------------------Deletion In BST
+
+node *deletion_BST(node *del , int data)
+{
+	if (root==NULL)
+	{	
+		cout<<"Empty tree"<<endl;
+		return root;
+	}
+	
+	if (data<del->key)
+	{
+		del->left=deletion_BST(del->left , data);
+	}
+	else if (data>del->key)
+	{
+		del->right=deletion_BST(del->right , data);
+	}
+	else
+	{
+		if(del->left==NULL && del->right==NULL)
+		{
+			node *deletednode= del;
+			delete(deletednode);
+			del=NULL;
+			cout<<"deleted1"<<endl;
+			return del;
+		}
+		if (del->right==NULL)
+		{
+			node *deletednode = del->left;
+			delete(del);
+			cout<<"deleted2"<<endl;
+			return deletednode;
+		}
+		else if (del->left==NULL)
+		{
+			node *deletednode = del->right;
+			delete(del);
+			cout<<"deleted3"<<endl;
+			return deletednode;
+		}
+		else
+		{
+			node *temp = FindMin(del->right);
+			del->key = temp->key;
+			del->right=deletion_BST(del->right , temp->key);
+			cout<<"deleted4"<<endl;
+			return del;
+		}
+	}
+}
+
+int main()
+{
+	int Data;
+	cout<<"Enter element to delete"<<endl;
+	cin>>Data;
+return 0;
+}
+
+
+------------------------------------------------------Max Depth
+
+int maxDepth(struct node* node) 
+{
+   if (node==NULL) 
+       return 0;
+   else
+   {
+       /* compute the depth of each subtree */
+       int lDepth = maxDepth(node->left);
+       int rDepth = maxDepth(node->right);
+ 
+       /* use the larger one */
+       if (lDepth > rDepth) 
+           return(lDepth+1);
+       else return(rDepth+1);
+   }
+} 
+
+--------------------------------------------------- Min Depth
+
+
+
+int *Mindepth(node *root)
+{
+	if(root==NULL)
+	{
+		return 0;
+	}
+	
+	if(root->left==NULL && root->right==NULL)
+	{
+		return 1;
+	}
+	if(root->left==NULL)
+	{
+		return Mindepth(root->right) + 1;
+	}
+	if(root->right==NULL)
+	{
+		return Mindepth(root->left) + 1;
+	}
+	return min (Mindepth(root->left) , Mindepth(root->right)) +1;
+}
+
+------------------------------------------------

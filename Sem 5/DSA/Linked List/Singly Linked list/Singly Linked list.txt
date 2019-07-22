@@ -1,0 +1,349 @@
+---------------------------------------------------Creation of Linked list
+
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int key;
+	node *next;
+}*root= NULL;
+
+
+int main() {
+	
+	node *ptr = new node;
+	ptr->key= 12;
+	root=ptr;
+	
+	ptr->next=NULL;
+	cout<<ptr->key;
+return 0;        
+}
+
+
+---------------------------------------------------Insertion and print linked list
+
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int key;
+	node *next;
+}*root= NULL;
+
+void insert ( node *newnode)
+{
+	if(root==NULL)
+	root=newnode;
+	
+	else
+	{
+		node *ptr=NULL;
+		ptr=root;
+		while(ptr->next!=NULL)
+		{
+			ptr=ptr->next;
+		}
+		ptr->next = newnode;
+	}
+}
+
+void print ()
+{
+	node *ptr= NULL;
+	ptr=root;
+	while(ptr->next!=NULL)
+	{
+		cout<<ptr->key<<endl;
+		ptr=ptr->next;
+	}
+	cout<<ptr->key;
+}
+
+int main() {
+	
+	for(int i =0; i<5; i++)
+	{
+		int data =0;
+		cin>>data;
+		node *ptr = new node;
+		ptr->key = data;
+		ptr->next=NULL;
+		insert (ptr);
+		cout<<"inserted"<<endl;
+		
+	}
+	
+	print();
+return 0;        
+}
+
+
+--------------------------------------Deleting a node with a given key
+
+	int del;
+	cout<<"\n enter the node to be deleted"<<endl;
+	cin>>del;
+	if(del==root->key)
+	{
+		node *deletednode = root;
+		root= root->next;
+		deletednode->next = NULL;
+	}
+	
+	else
+	{
+	
+		node *temp = NULL;
+		node *prev = NULL;
+		temp = root;
+		while(temp->key!=del)
+		{
+			prev = temp;
+			temp = temp->next;
+		}
+	
+		prev->next = temp->next;
+		temp->next = NULL;
+	}
+
+
+--------------------------------------Deleteing node at a given position
+
+	int position=1;
+	node *temp, *prev;
+	cout<<"\n enter the node position to be deleted"<<endl;
+	cin>>del;
+	temp = root;
+	while(position!=del)
+	{	
+		prev= temp;
+		temp=temp->next;
+		position++;
+	}
+	
+	if(position ==1)
+	{
+		node *ptr= root;
+		node *deletednode = root;
+		root=root->next;
+		deletednode->next = NULL;
+		cout<<"node deeleted at "<<position<<endl;
+	}
+	else
+	{
+		prev->next=temp->next;
+		temp->next=NULL;
+		cout<<"node deeleted at "<<position<<endl;
+	}
+	print();
+
+--------------------------------------Deleting using delete function
+
+void delet(int data) //do not name function as delete, it will give error
+{
+	int del;
+	del=data;
+	
+	if(del==root->key)
+	{
+		node *deletednode = root;
+		root= root->next;
+		deletednode->next = NULL;
+	}
+	
+	else
+	{
+	
+	node *temp = NULL;
+	node *prev = NULL;
+	temp = root;
+	while(temp->key!=del)
+	{
+		prev = temp;
+		temp = temp->next;
+		
+	}
+	
+	prev->next = temp->next;
+	temp->next = NULL;
+	}
+	
+	print();
+}
+
+--------------------------------------Get count of linked list
+
+int getcount(node *h)
+	{	int c;
+		if (h==NULL)
+			return 0;
+		else
+		{
+			int cnt=1;
+			node *temp = h;
+			while(h->next!=NULL)
+			{
+				temp = temp->next;
+				if(temp=h)
+				break;
+				cnt++;
+			}
+			return cnt;
+		}
+		
+			
+	}
+
+int main()
+{
+	int count = getcount(root);
+	cout<<count;
+}
+
+
+------------------------------------print nth node from the end
+
+
+void getnthfromend(int a)
+{
+	node *main, *ref;
+	main = ref = root;
+	int count=1;
+	while(count!=a)
+	{
+		ref=ref->next;
+		count++;
+	}
+	
+	while(ref->next!=NULL)
+	{
+		ref=ref->next;
+		main=main->next;
+	}
+	cout<<main->key;
+}
+
+------------------------------------Find Loop // IMPORTANT
+
+void findloop()
+{
+	node *main, *ref;
+	main = root;
+	ref= root->next;
+	while(ref!=main && ref!=NULL && ref->next!=NULL)
+	{
+		ref=ref->next->next;
+		main=main->next;
+	}
+	if(main==ref)
+	{
+		cout<<"loop found"<<endl;
+	}
+	else
+	{
+		cout<<"loop not found"<<endl;
+	}
+}
+
+
+-----------------------------------Find the no of nodes in loop
+
+node *findloop()
+{
+	node *main, *ref;
+	main = root;
+	ref= root->next;
+	while(ref!=main && ref!=NULL && ref->next!=NULL)
+	{
+		ref=ref->next->next;
+		main=main->next;
+	}
+	if(main==ref)
+	{
+		cout<<"loop found"<<endl;
+	}
+	else
+	{
+		cout<<"loop not found"<<endl;
+	}
+	
+	return ref;
+}
+
+
+
+int getcount(node *h)
+	{	int c;
+		if (h==NULL)
+			return 0;
+		else
+		{
+			int cnt=1;
+			node *temp = h;
+			while(1)
+			{
+				temp = temp->next;
+				if(temp==h)
+				break;
+				cnt++;
+			}
+			return cnt;
+		}
+		
+			
+	}	
+	
+int main() {
+	
+	node *a=findloop();
+	int count = getcount(a);
+	cout<<"Length= "<<count<<endl;
+return 0;
+}
+
+
+-------------------------------------------------To remove loop
+
+
+node *removeloop(int b)
+	{
+		int ct = 1;
+		node *head = root;
+		node *last= head->next;
+		int count=b;
+		while(ct!=count)
+		{
+			last=last->next;
+			ct++;	
+		}
+		node *prev = NULL;
+		while(last!=head)
+		{	prev=last;
+			head=head->next;
+			last=last->next;
+			
+		}
+		
+		prev->next=NULL;
+		cout<<"loop removed"<<endl;
+	}
+
+------------------------------------------------Reverse Linked list
+
+node *nxt=NULL, *prev=NULL, *current=root;
+	while(current!=NULL)
+	{
+		nxt=current->next;
+		current->next=prev;
+		prev=current;
+		current=nxt;
+	}
+	root=prev;
+	print();
+
+----------------------------------------------find palindrome
+
+

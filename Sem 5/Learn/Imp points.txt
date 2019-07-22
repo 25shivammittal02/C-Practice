@@ -1,0 +1,7 @@
+->) Vector in C++ is a class in STL that represents an array. The advantages of vector over normal arrays are,
+
+	We do not need pass size as an extra parameter when we pass vector.
+	Vectors have many in-built function like, erasing an element, etc.
+	Vectors support dynamic sizes, we do not have to initially specify size of a vector. We can also resize a vector.
+	
+->) 

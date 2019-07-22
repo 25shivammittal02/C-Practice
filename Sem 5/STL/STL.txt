@@ -1,0 +1,347 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+int main()
+{
+	vector <int> v;
+	v.push_back(10);
+	v.push_back(2);
+
+	
+	cout<<"size - "<<v.size()<<endl;
+
+	vector<int>::iterator itr = v.begin();
+	cout<<*itr<<endl;
+	sort(v.begin() , v.end());
+	for(; itr != v.end(); itr++)
+	{
+		cout<<*itr<<endl;
+	}
+	v.clear();
+	
+	cout<<"size - "<<v.size()<<endl;
+	return 0;
+}
+
+//-----------------------------PAIR-----------------------------
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	pair <int, int> p = make_pair(10,20);
+	cout<<p.first<<"- "<<p.second<<endl;
+	
+	map <int, int> mp;
+	
+	for(auto it=mp.begin(); it!=mp.end(); it++)
+	{
+		cout<<it->first<<"---"<<it->second<<endl;
+	}
+	return 0;
+}
+
+
+//-----------------------------MAPS----------------------------
+//Maps store data in red black tree, therefore search is fast
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	map <int, int> mp;
+	mp[4] =400;
+	mp[3]= 420;
+	mp.insert(make_pair(10,100));
+	mp.insert(make_pair(10,700));  //no effect as the insert function is only to insert value not to update it
+	mp[7] =700;
+	for(auto it=mp.begin(); it!=mp.end(); it++)
+	{
+		cout<<it->first<<"---"<<it->second<<endl;
+	}
+	return 0;
+}
+
+//----------------------------MULTI-MAP----------------------------
+//values r not updated, new values are inserted
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	multimap <int, int> mp;
+	//mp[4] =400; in multimaps these r not used to insert value
+	//mp[3]= 420;
+	mp.insert(make_pair(10,100));
+	mp.insert(make_pair(10,400));
+	mp.insert(make_pair(10,60));
+	mp.insert(make_pair(10,1000));
+	mp.insert(make_pair(5,70));
+	//mp[7] =700;
+	for(auto it=mp.begin(); it!=mp.end(); it++)
+	{
+		cout<<it->first<<"---"<<it->second<<endl;
+	}
+	return 0;
+}
+
+//--------------------------UNORDERED-MAP--------------------------
+//It is implemented as HASH Table, much faster than maps(RB Trees)
+// complexity O(1)
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	unordered_map <int, int> mp;
+	mp[4]=400;
+	mp[3] =100;
+	mp.insert(make_pair(10,1000));
+	mp.insert(make_pair(4,50));
+	mp.insert(make_pair(11,250));
+	// result is diplayed as random, no ordering
+	for(auto it=mp.begin(); it!=mp.end(); it++)
+	{
+		cout<<it->first<<"---"<<it->second<<endl;
+	}
+	return 0;
+}
+
+
+//----------------------------ERASE---------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	vector <int> v;
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(40);
+	v.push_back(60);
+	v.push_back(70);
+	cout<<"size of vector before erasing = "<<v.size()<<endl;
+	v.erase(v.begin()+3 , v.begin()+4); //10,20,30,40,60,70
+	v.erase(v.begin()+3 , v.begin()+3); //10,20,30,40,60,70 no change
+	v.erase(v.begin(), v.begin()+1); // 20.30.40.60.70
+	v.erase(v.begin()+3, v.end()-1); //20,30,40,70
+	cout<<"size of vector after erasing = "<<v.size()<<endl;
+	for(auto &val : v)
+	{
+		cout<<"vector value = "<<val<<endl;
+	}
+	
+	return 0;
+}
+
+
+//------------------------------REMOVE---------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	vector <int> v;
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(40);
+	v.push_back(60);
+	v.push_back(70);
+	cout<<"size of vector before removing = "<<v.size()<<endl;
+	//std::remove(v.begin(), v.end(),40); // removes but re-arranges the values, dosnt reduce the size of vector
+	v.erase(std::remove(v.begin(), v.end(), 40),v.end()); //removes as well as shifts the values // reduces the size of vector
+	cout<<"Size of vector after removing = "<<v.size()<<endl;
+	for(auto &val : v)
+	{
+		cout<<"vector value = "<<val<<endl;
+	}
+	
+	return 0;
+}
+
+
+//----------------------------SET-------------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	set<int> myset;	
+	myset.insert(100), myset.insert(200), myset.insert(40), myset.insert(90), myset.insert(40);
+	myset.erase(myset.begin()); // erase command using iterator
+	
+	for(auto &setval : myset)
+	{
+		cout<<"value of set = "<<setval<<endl;
+	}
+	return 0;
+}
+
+
+//---------------------------Greater //comparators---------------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	set<int, greater<int>> myset; //now prints in descending order (sabse badi wali value last mai dalti hai)
+	
+	myset.insert(100), myset.insert(200), myset.insert(40), myset.insert(90), myset.insert(40);	
+	for(auto &setval : myset)
+	{
+		cout<<"value of set = "<<setval<<endl;
+	}
+	
+	map<int, string, greater<int>> mymap; //now prints in descending order
+	mymap[10]="abc" , mymap[15]= "defg" , mymap[3]="xyz";
+	for(auto &elem : mymap )
+	{
+		cout<<elem.first<<"---"<<elem.second<<endl;
+	}
+	return 0;
+}
+
+
+//-------------------------STACK-----------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	stack<int ,vector<int>> cstk; // stack<int , list<int>> cstk;
+	cstk.push(100);
+	cstk.push(200);
+	cstk.push(20);
+	
+	while(cstk.size() != 0) // while(!cstk.empty())
+	{
+		cout<<cstk.top()<<endl; //print top element
+		cstk.pop(); //pop the top element
+	}
+	return 0;
+}
+
+
+//------------------------QUEUE-----------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	queue<int deque<int>> cstk; // queue<int, list<int>> cstk; // vector can't be used in this
+	cstk.push(100);
+	cstk.push(200);
+	cstk.push(300);
+	
+	while(cstk.size() != 0) // while(!cstk.empty())
+	{
+		cout<<cstk.front()<<endl; //100,200,300
+		//cout<<cstk.back()<<endl;  //300,300,300
+		cstk.pop();
+	}
+	return 0;
+}
+
+//-----------------------PRIORITY QUEUE-----------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	priority_queue<int, vector<int>, std::less<int>> cstk; //std::greater<int>> //by default it adds in descending order // list<int> cant be used
+	cstk.push(100);
+	cstk.push(400);
+	cstk.push(25);
+	cstk.push(129);
+	
+	while(cstk.size() != 0) // while(!cstk.empty())
+	{
+		cout<<cstk.top()<<endl; // these cant be used //cout<<cstk.front()<<endl;  cout<<cstk.back()<<endl;
+		cstk.pop();
+	}
+	return 0;
+}
+
+//----------------------------SORT----------------------------
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+void show(int a[]) 
+{ 
+    for(int i = 0; i < 10; ++i) 
+        cout << a[i] << " "; 
+} 
+  
+int main() 
+{ 
+    int a[10]= {11, 5, 8, 9, 6, 7, 3, 4, 2, 0}; 
+    cout << "The array before sorting is : "; 
+    show(a);
+	cout<<endl; 
+  
+    sort(a , a+10); //ascending sort // greater<int>() descending sort 
+	if(binary_search(a,a+10, 5)) // sorting is necessary before performing binary search, and in ascending order
+	{
+		cout<<"yes"<<endl;
+	}
+	else
+	{
+		cout<<"not Found"<<endl;
+	}
+  
+    cout << "The array after sorting is : "; 
+    show(a);
+	cout<<endl; 
+  
+    return 0; 
+  
+}
+
+//---------------------------Compare and swap-------------------------
+#include <iostream> 
+#include<bits/stdc++.h> 
+using namespace std; 
+
+int main() 
+{ 
+	pair<int, int>pair1 = make_pair(2, 12); 
+	pair<int, int>pair2 = make_pair(9, 3);
+	pair1.swap(pair2);
+
+	cout<<pair1.first<<"-"<<pair1.second<<"--"<<pair2.first<<"-"<<pair2.second<<endl; //swapped pairs
+	
+	pair<int, int>pair1 = make_pair(2, 12); 
+	pair<int, int>pair2 = make_pair(9, 3);
+	cout << (pair1 == pair2) << endl;
+	cout << (pair1 != pair2) << endl; 
+	cout << (pair1 >= pair2) << endl; 
+	cout << (pair1 <= pair2) << endl; 
+	cout << (pair1 > pair2) << endl; 
+	cout << (pair1 < pair2) << endl;
+	return 0;
+}
+
+
+//----------------------------

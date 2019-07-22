@@ -1,0 +1,86 @@
+Q-> Write a prog to find the middle element of a linked list?
+Sol->
+
+
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int key;
+	node *next;
+}*root= NULL;
+
+void insert ( node *newnode)
+{
+	if(root==NULL)
+	root=newnode;
+	
+	else
+	{
+		node *ptr=NULL;
+		ptr=root;
+		while(ptr->next!=NULL)
+		{
+			ptr=ptr->next;
+		}
+		ptr->next = newnode;
+	}
+}
+
+void print ()
+{
+	node *ptr= NULL;
+	ptr=root;
+	while(ptr->next!=NULL)
+	{
+		cout<<ptr->key<<endl;
+		ptr=ptr->next;
+	}
+	cout<<ptr->key;
+}
+
+
+void middle()
+{
+	node *main, *ref;
+	main = ref = root;
+	while(ref->next!=NULL && ref!=NULL)
+	{
+		ref=ref->next->next;
+		main=main->next;
+	}
+	cout<<main->key;
+}
+
+int main() {
+	
+	
+	for(int i =0; i<6; i++)
+	{
+		int data =0;
+		cin>>data;
+		node *ptr = new node;
+		ptr->key = data;
+		ptr->next=NULL;
+		insert (ptr);
+		cout<<"inserted"<<endl;
+		
+	}
+	
+	print();
+	cout<<endl;
+	middle();
+	
+	
+return 0;        
+}
+
+
+Doubt-> why this function middle() is working for odd no of elements in linked list, but not for even no of elements.
+
+
+
+
+
+Q-> how to check palindrome in a linked list?

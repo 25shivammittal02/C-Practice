@@ -1,0 +1,641 @@
+//K-Reversal in LL
+#include <iostream>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+};
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        cout<<"Empty";
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<" ";
+        ptr = ptr->next;
+    }
+}
+
+node *k_reverse(node *&head, int k)
+{
+    node *next_temp=NULL;
+    node *ptr = head;
+    int cnt =0;
+    node *prev = NULL;
+    while(ptr!=NULL && cnt<k)
+    {
+        next_temp = ptr->next;
+        ptr->next = prev;
+        prev = ptr;
+        ptr = next_temp;
+        cnt++;
+    }
+    if(next_temp != NULL)
+    {
+        head->next = k_reverse(next_temp, k);
+    }
+    return prev;
+}
+
+int main() 
+{
+    int n,k;
+    cin>>n>>k;
+     node *head = NULL;
+    for(int i=0;i<n;i++)
+    {
+        int a;
+        cin>>a;
+        insertAtEnd(head,a);
+    }
+    head = k_reverse(head , k);
+    printLL(head);
+}
+
+---------------------------------------------------
+
+//Merge Sorted Linked Lists
+#include <iostream>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+};
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+node* mergeLL(node *head1, node *head2)
+{
+    if(head1 == NULL)
+    {
+        return head2;
+    }
+    if(head2 == NULL)
+    {
+        return head1;
+    }
+    node *newhead;
+    if(head1->key <= head2->key)
+    {
+        newhead = head1;
+        newhead->next = mergeLL(head1->next, head2);
+    }
+    else
+    {
+        newhead = head2;
+        newhead->next = mergeLL(head1, head2->next);
+    }
+    return newhead;
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<" ";
+        ptr = ptr->next;
+    }
+}
+
+int main()
+{
+    int value;
+    int t;
+    cin>>t;
+    for(int i=0;i<t;i++)
+    {
+        int n1,n2;
+        cin>>n1;
+        node *head1 = NULL;
+        for(int j=0;j<n1;j++)
+        {
+            cin>>value;
+            insertAtEnd(head1,value);
+        }
+        cin>>n2;
+        node *head2 = NULL;
+        for(int j=0;j<n2;j++)
+        {
+            cin>>value;
+            insertAtEnd(head2,value);
+        }
+        node *ans = mergeLL(head1,head2);
+        printLL(ans);
+        cout<<endl;
+    }
+}
+
+---------------------------------------------------
+
+//Linked List-K Append
+#include <iostream>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+};
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<" ";
+        ptr = ptr->next;
+    }
+}
+
+int main()
+{
+    int value;
+    int n;
+    cin>>n;
+    node *head = NULL;
+    for(int j=0;j<n;j++)
+    {
+        cin>>value;
+        insertAtEnd(head,value);
+    }
+    int k;
+    cin>>k;
+    k = k%n;
+    if(k!=0)
+    {
+        node *ptr= head;
+        for(int i=0; i<(n-k-1); i++)
+        {
+            ptr = ptr->next;
+        }
+        node *newhead = ptr->next;
+        ptr->next = NULL;
+        ptr = newhead;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        ptr->next = head;
+        head = newhead;
+        printLL(newhead);
+    }
+    else
+    {
+        printLL(head);
+    }
+}
+
+---------------------------------------------------
+
+//Even After ODD
+#include <iostream>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+};
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<" ";
+        ptr = ptr->next;
+    }
+}
+
+int main()
+{
+    int value;
+    int n;
+    cin>>n;
+    node *head = NULL;
+    for(int j=0;j<n;j++)
+    {
+        cin>>value;
+        insertAtEnd(head,value);
+    }
+    node *ptr = head;
+    node *odd = NULL;
+    node *even = NULL;
+    while(ptr!=NULL)
+    {
+        if((ptr->key%2)==0 )
+        {
+            insertAtEnd(even , ptr->key);
+            ptr=ptr->next;
+        }
+        else
+        {
+            insertAtEnd(odd , ptr->key);
+            ptr=ptr->next;
+        }
+    }
+    printLL(odd);
+    printLL(even);
+
+}
+
+---------------------------------------------------
+
+//Kth element from last
+#include <iostream>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+};
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+void search_element(node *head, int n, int &cnt)
+{
+    if(head==NULL)
+    {   
+        cnt = 0;
+        return;
+    }
+    search_element(head->next , n, cnt ); 
+    cnt = cnt+1;
+    if(cnt == n+1)
+    {
+        cout<<head->key;
+        return;
+    }
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<" ";
+        ptr = ptr->next;
+    }
+}
+
+int main()
+{
+    int value;
+    node *head = NULL;
+    while(value != -1)
+    {
+        cin>>value;
+        insertAtEnd(head,value);
+    }
+    int n;
+    cin>>n;
+    int l =0;
+    search_element(head, n, l);
+}
+
+---------------------------------------------------
+
+//Kth element from last
+#include <iostream>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+};
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+node* reverseLL(node *head, node *prev)
+{
+    if(head->next==NULL or head==NULL)
+    {
+        head->next = prev;
+        return head;
+    }
+    else
+    {
+        node *temp = head->next;
+        head->next = prev;
+        reverseLL(temp,head);
+    }
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<" ";
+        ptr = ptr->next;
+    }
+}
+
+int main()
+{
+    int value;
+    node *head = NULL;
+    while(value != -1)
+    {
+        cin>>value;
+        insertAtEnd(head,value);
+    }
+    head = reverseLL(head, NULL);
+    int n;
+    cin>>n;
+    node *ptr = head;
+    int i=0;
+    while( i<n)
+    {
+        ptr = ptr->next;
+        i++;
+    }
+    cout<<ptr->key;
+
+}
+
+---------------------------------------------------
+
+//Palindrome
+#include <iostream>
+#include<stack>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+};
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        cout<<"Empty";
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<" ";
+        ptr = ptr->next;
+    }
+}
+
+int isPalin(node* head)
+{ 
+          
+    node *slow = head; 
+    stack <int> s; 
+    int i; 
+    int ans = 1;
+    while(slow != NULL)
+    { 
+        s.push(slow->key); 
+        slow = slow->next; 
+    }
+    node *ptr = head;
+    while(ptr != NULL )
+    { 
+     
+        i=s.top(); 
+        s.pop(); 
+        if(ptr->key == i)
+        {
+            ans = 1; 
+        }
+        else
+        {
+            ans = 0;
+            break; 
+        } 
+       ptr=ptr->next; 
+    }
+return ans; 
+}
+
+int main() 
+{
+    int n,a;
+    cin>>n;
+    node *head = NULL;
+    for(int i=0;i<n;i++)
+    {
+        cin>>a;
+        insertAtEnd(head,a);
+    }
+    a = isPalin(head);
+	if(a==1)
+	{
+		cout<<"True";
+	}
+	else
+	{
+		cout<<"False";
+	} 
+}
+
+---------------------------------------------------
+
+//

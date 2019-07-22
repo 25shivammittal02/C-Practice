@@ -1,0 +1,359 @@
+//Print Subsets
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    string x = "abc";
+    int l = x.length();
+    int n = ((1<<l) -1);
+    for(int i=n; i>0; i--)
+    {
+        for(int j=0; j<l; j++)
+        {
+            if(((i>>j) & 1)==1)
+            {
+                cout<<x.at(j);
+            }
+        }
+        cout<<endl;
+        
+    }
+}
+
+************************
+
+//
+
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    int arr[] = {2,3,5,7,11,13,17,19};
+    int l = sizeof(arr)/sizeof(arr[0]);
+    int n;
+    cin>>n;
+    int sum = 0;
+    int f = ((1<<l) -1);
+    for(int i=f; i>0; i--)
+    {   
+        int cnt = 0;
+        int a =1;
+        for(int j=0; j<l; j++)
+        {   
+            if(((i>>j) & 1)==1)
+            {
+                a = a * (arr[l-j-1]);
+                cnt = cnt + 1;
+            }
+        }
+        if ((cnt%2) == 0)
+        {
+            sum = sum - (n/a);
+        }
+        else
+        {
+            sum = sum + (n/a);
+        }
+    }
+    cout<<sum<<endl;
+}
+
+***********************************
+
+//find max sub array Sum 
+//Kadane's Algorithm
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    int current_sum = 0;
+    int max_sum = 0;
+    for(int i=0; i<n; i++)
+    {
+        current_sum = current_sum + arr[i];
+        if(current_sum > max_sum)
+        {
+            max_sum = current_sum;
+        }
+        if(current_sum<0)
+        {
+            current_sum = 0;
+        }
+    }
+    cout<<max_sum<<endl;
+
+}
+
+******************************
+
+//plot area problem // sum of sub array = k (area)
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int n,area;
+    cin>>area>>n;
+    int arr[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    int start = 0;
+    int end = 0;
+    int current_sum = arr[0];
+    while(start<n && end<n)
+    {
+        if(current_sum > area)
+        {
+            current_sum = current_sum - arr[start];
+            if(start == end)
+            {
+                end++;
+            }
+            start++;     
+        }
+        else if(current_sum < area)
+        {
+            end++;
+            current_sum = current_sum + arr[end];
+        }
+        else
+        {
+            cout<<"Sum Found at index = "<<start<<" to "<<end<<endl;
+            break;
+        }
+    }
+}
+
+
+**************************************
+//Check if array is Sorted or not
+
+#include <iostream>
+using namespace std;
+
+bool isSorted(int *a , int n)
+{
+    //Base case
+    if(n==1)
+    {
+        return true;
+    }
+    //Rec Case
+    if(a[0]<a[1] and isSorted(a+1, n-1))
+    {
+        return true;
+    }
+    return false;
+}
+int main() 
+{
+    int arr[] = {1,2,5,4,6};
+    int n =sizeof(arr)/ sizeof(arr[0]);
+    
+
+    cout<< isSorted(arr , n);
+}
+
+**************************************
+
+//incremrnt n decrement
+
+#include <iostream>
+using namespace std;
+
+int dec (int n)
+{
+    if(n==0)
+    return 0;
+    cout<<n;
+    dec(n-1); 
+    
+}
+
+int inc (int n)
+{
+    if(n== 0)
+    return 0;
+    inc(n-1);
+    cout<<n;
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    dec(n);
+    cout<<endl;
+    inc(n);
+
+}
+
+*******************************
+
+//power fucntion (no modification)
+
+#include <iostream>
+using namespace std;
+
+int power(int a, int n)
+{
+    if (n==0)
+    {
+        return 1;
+    }
+    else
+    {
+        return (a*power(a,n-1));
+    }
+}
+
+int main() 
+{
+   cout<<power (2,5);
+}
+
+
+***********************************
+
+//Power funtion with n/2 modification
+
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int power(int a, int n)
+{
+    if (n==0)
+    {
+        return 1;
+    }
+    if ((n&1) == 0)
+    {
+        int small_ans = power(a, n/2);
+        small_ans = small_ans * small_ans;
+        return small_ans;
+    }
+    else
+    {
+        int small_ans = power(a, n/2);
+        small_ans = small_ans * small_ans;
+        return a*small_ans;
+    }
+}
+
+int main() 
+{
+   cout<<power (2,5);
+}
+
+
+***********************************
+
+// Power using BITMASKING
+
+#include <iostream>
+using namespace std;
+
+int fastpower(int a, int n)
+{
+    int ans =1;
+    while (n>0)
+    {
+        if (n&1)
+        {
+            ans = ans * a;
+        }
+        a= a*a;
+        n = n>>1;
+    }
+    return ans;
+}
+
+int main() 
+{
+    cout<<fastpower(2,5);
+}
+
+************************************
+
+//modify character array
+
+#include <iostream>
+using namespace std;
+
+void modify(char *input , int i)
+{
+    if(input[i] == '\0' or input[i+1]=='\0'){
+        return;
+    }
+    if(input[i]=='p' and input[i+1]=='i')
+    {
+        int j=i+2;
+        while(input[j]!='\0')
+        {
+            j++;
+        }
+        while(j>i+2)
+        {
+            input[j+2]= input[j];
+            j--;
+        }
+        input[i] = '3';
+        input[i+1] = '.';
+        input[i+2] = '1';
+        input[i+3] = '4';
+        modify(input, i+4);
+    }
+    else{
+        modify(input, i+1);
+    }
+}
+
+int main()
+{
+    char arr[20] = {'x','p','i','p','y','h','p','i'};
+    modify(arr , 0);
+    cout<<arr;
+
+    return 0;
+}
+
+************************************
+
+//tiling problem
+
+
+
+************************************
+//n friends bike problems
+
+#include <iostream>
+using namespace std;
+
+int cases(int n)
+{
+    if (n <=1)
+    return 1;
+    else
+    return (cases(n-1) + ((n-1)*cases(n-2)));
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    cout<<cases(n);
+}
+

@@ -1,0 +1,167 @@
+//address of operator (&)
+
+int x=10;
+cout<<&x<<endl; // address of x -> 0xfedfdfd(abc) //how many digits?
+int size 4 bytes, char 1 byte
+int -> 2^32 =10^9
+long long int -> 2^64 =10^18
+int* -> shows pointer
+int* y;
+y=&x;
+y will have add of x ie abc
+int **z=&y -> add of pointer
+pointer variable will have different space, coz it stores add, not data type 
+ch pointer, int pointer 
+if 32 bit arch- 4 bytes size of pointer variable
+if 64 bit arch- 8 bytes size of pointer variable
+
+usage of * operatr
+1) multiply
+2) pointer
+3) de-referencing-> does opposite of AND 
+
+//dereferencing operator
+&x=abc
+y= abc
+*y=x -> abc add pe konsi bucket hai
+
+
+x=10, y=20, z=30;
+
+cout<< z= add of y
+**z= value of x
+*z = value of y
+*(&y)= 20
+&(*y) = 20
+&(*z) = 30
+&z = 40
+*x = compilation error
+
+pass by pointer, reference variables
+
+
+// reference variables
+void fun(int *y)
+{
+
+*y =*y+1
+}
+int main()
+{
+fun(&x);
+cout<<x;
+}
+
+
+int &y =x // x ka allias created, x ka ek aur name dde diya y
+
+int x= 10;
+int &y = x;
+y++;
+
+cout<<x<<endl; // 11
+cout<<y<<endl; // 11
+
+void fun(int &z) // z also becomes the allias of x,y
+z++;
+
+
+
+
+
+
+// && logical and
+
+if (x>0 and y<20)
+
+
+//BITWISE OPEATOR
+// & Bitwise AND, OR XOR NOR
+XOR- 	same-> 0;
+	5XOR7
+convert to binary
+n then perfron xor bitwise, n find result
+
+right shift
+5-> 0000101
+5>>1 0000010
+shows division by 5/2
+5>>2 5/(2^2)
+0000001
+5>>b 5/(2^b)
+
+instead of mod 2, we use bitwise
+to find even or odd
+And with 1
+if 1-> odd
+if 0-> even
+
+//left shift ->  may cause an number to become 0
+i.e. 11000-> left shift by 2, makes it 0
+use long long int in this case
+
+5 -> 00000101
+5<<1 00001010 multiply by 2
+5<<2 00010100 multiply by 2^2
+5<<b multiply by 2^b
+
+
+multiply by 9
+x<<3 + x ->left shift
+x(2^3 +1)
+
+
+multiply by 4
+
+
+
+
+get last bit -> AND with 1
+get ith bit -> 0001000 se AND kar do, if it turns out to be geater than 0 then the digit is 1
+get ith bit
+1<<i
+
+return (n&(1<<i))>0
+true -> 1
+false -> 0
+
+
+set ith bit-->
+sitibit(&n , 1)
+return (n|(1<<i))
+
+count the number of bits-->
+(n&1)
+1<<i
+
+int count_bits (int n)
+{
+	int cnt =0;
+	while(n>0){
+	ans+ = (n&1);
+	n= n>>1;
+	}
+return ans;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	cout<<count_bits(n)<<endl;
+
+}
+
+
+int fun(int n) // count the number of set bits
+{
+	int cnt = 0;
+	while(n>0)
+	{
+		ans ++;
+		n = (n&n-1);
+	}
+}
+
+// cout<<_builtin_popcount(n) << endl; //complxity O(1) // no of set bits
+// int &y =z // creating reference varialble
+

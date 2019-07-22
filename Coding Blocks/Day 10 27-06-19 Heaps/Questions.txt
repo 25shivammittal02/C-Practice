@@ -1,0 +1,51 @@
+//https://www.spoj.com/problems/RMID/
+
+#include<iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	int a;
+	while(scanf("%d", &a)!= EOF)
+	{
+		int cnt=0;
+		vector<int> v;
+		while(1)
+		{	
+		
+			if(a!=-1 and a!=0)
+			{
+				v.push_back(a);
+				cnt++;
+			}
+			else if(a==-1)
+			{
+				if(cnt%2==0)
+				{
+					cout<<v[(cnt/2)-1]<<endl;
+					v.erase(v.begin()+((cnt/2)-1));
+				}
+				else
+				{
+				    
+					cout<<v[(cnt/2)]<<endl;
+					v.erase(v.begin()+cnt/2);
+				}	
+				cnt--;
+			}
+			else
+			{
+				break;
+			}
+				cin>>a;
+		}
+		cout<<endl;
+	}
+
+}
+
+-------------------------------------------------
+//k sorted arrays, print the final sorted array by merging them
+

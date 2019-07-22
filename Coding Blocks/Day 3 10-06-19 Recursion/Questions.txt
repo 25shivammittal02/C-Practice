@@ -1,0 +1,244 @@
+//count the number of binary numbers possible without having any consecutive 1, for a given number of digits
+//same as fibonaccie series
+
+#include <iostream>
+using namespace std;
+
+int cases(int n)
+{
+    if (n==0)
+    return 1;
+    if(n==1)
+    return 2;
+    else
+    return (cases(n-1) + cases(n-2));
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    cout<<cases(n);
+}
+
+***************************************
+
+//Bubble Sort
+#include <iostream>
+using namespace std;
+
+void bubblesrt(int *a, int n)
+{
+    //Base Case
+    if(n==1)
+    {
+        return;
+    }
+    //Rec Case
+    else
+    {
+        for(int j = 0; j<n-1; j++)
+        {
+            if(a[j]>a[j+1])
+            {
+                swap(a[j] , a[j+1]);
+            }
+            bubblesrt(a, n-1);
+        }
+    }
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for (int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    bubblesrt(arr , n);
+    for (int i=0; i<n; i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+    return 0;
+}
+
+***************************************
+
+//Bubble Sort
+#include <iostream>
+using namespace std;
+
+void bubblesrt(int *a, int n, int i)
+{
+    //Base Case
+    if(n<=1)
+    {
+        return;
+    }
+    //Rec Case
+    if(i==n-1)
+    {
+        return bubblesrt(a,n-1,0);
+    }
+    else
+    {
+        if(a[i]>a[i+1])
+        {
+            swap(a[i] , a[i+1]);
+        }
+        bubblesrt(a, n, i+1);
+    }
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for (int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    bubblesrt(arr , n, 0);
+    for (int i=0; i<n; i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+    return 0;
+}
+
+***************************************
+
+//Tower Hanoi
+//(2^n)-1 = number of steps
+
+#include <iostream>
+using namespace std;
+
+int toh(int n)
+{
+    if(n == 1)
+        return 1;
+    return toh(n-1) + 1 + toh(n-1);
+}
+void toh_print(char scr, char helper, char dest, int n)
+{
+    if(n==0)
+    {
+        return;
+    }
+    toh_print(scr, dest,helper, n-1);
+    cout<<"Moving ring "<<n<<" from "<<scr<<" to "<<dest<<endl;
+    toh_print(helper, scr, dest, n-1);
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    cout<<"Number of Steps involved"<<toh(n);
+    cout<<endl;
+    toh_print('A','B','C',n);
+    return 0;
+}
+
+***************************************
+
+//Merge Sort
+//O(nlog(n))
+#include<iostream>
+using namespace std;
+
+void merge(int arr[],int s,int e){
+	int mid = (s+e)/2;
+	int i =s;
+	int j =mid+1;
+	int k=s;
+
+	int temp[100];
+
+	while(i<=mid and j<=e){
+		if(arr[i]<arr[j]){
+			temp[k] = arr[i];
+			i++; k++;
+		}
+		else{
+			temp[k++] = arr[j++];
+		}
+	}
+	//put another loop
+	while(i<=mid){
+		temp[k++] = arr[i++];
+	}
+	while(j<=e){
+		temp[k++] = arr[j++];
+	}
+	//copy back elements to orignal array a
+	for(int i=s;i<=e;i++){
+		arr[i] = temp[i];
+	}
+
+}
+
+void mergeSort(int arr[],int s,int e){
+	//Base Case
+	if(s>=e){
+		return;
+	}
+	//Rec Case
+	int mid = (s+e)/2;
+	mergeSort(arr,s,mid);
+	mergeSort(arr,mid+1,e);
+	merge(arr,s,e);
+	return;
+}
+
+
+int main(){
+
+	int arr[] = {3,1,2,6,5,0};
+	int n = sizeof(arr)/sizeof(int);
+	mergeSort(arr,0,n-1);
+	for(int i=0;i<n;i++){
+		cout<<arr[i]<<" ";
+	}
+
+	return 0;
+}
+
+***************************************
+//Counting Inversions, (i<j && a[i]>a[j])
+//Brute Force
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int n;
+    int count =0;
+    cin>>n;
+    int arr[n];
+    for (int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+
+    for(int i= 0; i<n-1; i++)
+    {
+        for(int j = i+1; j<n; j++)
+        {
+            if(arr[j]<arr[i])
+            {
+                cout<<"("<<arr[i]<<","<<arr[j]<<")"<<endl;
+                count ++;
+            }   
+        }
+    }
+    cout<<count;
+}
+
+
+//By merge Sort

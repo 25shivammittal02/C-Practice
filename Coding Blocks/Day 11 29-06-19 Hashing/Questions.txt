@@ -1,0 +1,150 @@
+//Hashing
+#include <iostream>
+#include<unordered_map>
+#include<cstring>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	unordered_map<string, int> m;
+	m.insert(make_pair("mango", 180));
+	m["Apple"] = 200;
+	m["Apple"] += 20;
+	m["abc"] = 40;
+
+	if(m.count("Guava") == 0)
+	{
+		cout<<"Guava not present"<<endl;
+	}
+	else
+	{
+		cout<<m["Guava"]<<endl;
+	}
+
+	auto f = m.find("mango");
+	if(f!=m.end())
+	{
+		cout<<f->first<<" and "<<f->second<<endl;
+	}
+	cout<<m["Apple"]<<endl;
+	for(auto p:m)
+	{
+		cout<<p.first<<" and "<<p.second<<endl;
+	}
+}
+
+
+
+--------------------------------------------------------
+//Anagrams
+#include <iostream>
+#include<unordered_map>
+#include<cstring>
+#include<bits/stdc++.h>
+using namespace std;
+
+
+bool anagram(string s1, string s2)
+{
+	unordered_map<char, int> mp;
+	if(s1.size()!= s2.size())
+	{
+		return false;
+	}
+	for(int i=0;i<s1.size();i++)
+	{
+		mp[s1[i]]++;
+	}
+	for(int i=0;i<s2.size() ; i++)
+	{
+		if(mp.find(s2[i]) == mp.end())
+		{
+			return false;
+		}
+		else
+		{
+			mp[s2[i]]--;
+			if(mp[s2[i]] == 0)
+			{
+				mp.erase(s2[i]);
+			}
+		}
+	}
+	return mp.size() == 0;
+}
+
+int main()
+{
+	string s1,s2;
+	cin>>s1>>s2;
+	cout<<anagram(s1,s2);
+	return 0;
+}
+
+--------------------------------------------------------------
+//Rat in Jungle
+//https://hack.codingblocks.com/contests/c/931/2327
+
+#include <iostream>
+#include<unordered_map>
+#include<cstring>
+#include<bits/stdc++.h>
+using namespace std;
+
+int totalRats(int *arr, int n)
+{
+	unordered_map<int,int> mp;
+	int result =0;
+	for(int i=0;i<n;i++)
+	{
+		if(arr[i] == 0)
+		{
+			result += 1;
+		}
+		else if(mp.find(arr[i]) == mp.end())
+		{
+			result+= (arr[i]+1);
+			mp[arr[i]] =0;
+		}
+		else
+		{
+			mp[arr[i]]++;
+			if(mp[arr[i]] == arr[i])
+			{
+				mp.erase(arr[i]);
+			}
+		}
+	}
+
+	return result;
+}
+
+int main()
+{
+	int n;
+	cin>>n;
+	int *arr = new int[n];
+	for(int i=0;i<n;i++)
+	{
+		cin>>arr[i];
+	}
+	cout<<totalRats(arr,n);
+	return 0;
+}
+
+--------------------------------------------------------------
+//https://leetcode.com/problems/find-all-anagrams-in-a-string/
+
+
+
+
+--------------------------------------------------------------
+//https://hack.codingblocks.com/contests/c/669/1556
+
+
+
+
+--------------------------------------------------------------
+//Fibonacci heap
+

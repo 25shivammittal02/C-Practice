@@ -1,0 +1,57 @@
+
+
+Overloading occurs when two or more methods in one class have the same method name but different parameters. Overriding means having two methods with the same method name and parameters (i.e., method signature). One of the methods is in the parent class and the other is in the child class.
+
+#include <iostream>
+#include<string.h>
+using namespace std;
+
+class Car
+{
+        int price;
+    public:
+        int number;
+        string name;
+        void set_price(int p)
+        {
+            price=p;
+        }
+        int get_price()
+        {
+            return price;
+        }
+        Car()
+        {
+            cout<<"Modified default constructor";
+        }
+        Car(int p, int n, string s)
+        {
+            cout<<"Parameterized constructor"<<endl;
+            price =p;
+            number = n;
+            name = s;
+        }
+        Car(Car &X)
+        {   
+            cout<<"Copy Constructor called"<<endl;
+            price = X.price;
+            name =X.name;
+            number = X.number;
+            cout<<price<<name<<number;
+        }
+};
+
+int main() 
+{
+    Car c1;
+    c1.set_price(987);
+    c1.number = 12345;
+    c1.name = "BMW";
+    cout<<c1.get_price();
+    cout<<endl<<c1.number<<" "<<c1.name<<endl;
+    Car c2(100, 1234, "AUDI");
+    cout<<c2.get_price()<<" "<<c2.number<<" "<<c2.name<<endl;
+    Car c3=c2;
+    cout<<c3.get_price()<<" "<<c3.number<<" "<<c3.name<<endl;
+    Car c4(c2);
+}

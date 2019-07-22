@@ -1,0 +1,748 @@
+//Take as input N, the size of an integer array. Take one more input, which is a list of N integers separated by a space, and store that in an array. Write a recursive function which prints true if the array is sorted, and false otherwise.
+
+#include <iostream>
+using namespace std;
+
+bool isSorted(int *a , int n)
+{
+    //base cond
+    if (n==1)
+    {
+        return true;
+    }
+    //Rec case
+    if(a[0] <= a[1] and isSorted(a+1, n-1))
+    {
+        return true;
+    }
+    return false;
+
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    int ans = isSorted(arr , n);
+    if(ans == 0)
+    {
+        cout<<"false";
+    }
+    else
+    {
+        cout<<"true";
+    }
+
+}
+
+
+------------------------------------------------
+
+//Take as input N, the size of array. Take N more inputs and store that in an array. Take as input M, a number. Write a recursive function which returns the last index at which M is found in the array and -1 if M is not found anywhere. Print the value returned.
+
+#include <iostream>
+using namespace std;
+
+int searching(int *a , int n1, int m, int n)
+{
+    //base cond
+    if (n1==1)
+    {
+        if(a[n1] == m)
+        {
+            return (n1-1);
+        }
+
+    }
+    //Rec case
+    if(a[0] == m)
+    {
+        return (n-n1);
+    }
+    else
+    {
+        return searching(a+1, n1-1, m, n);
+    }
+
+}
+
+int main() 
+{
+    int n,m;
+    cin>>n;
+    int arr[n];
+    for(int i=n-1; i>=0; i--) // inserting element in array in reverse order, so as to get the last occurence of M
+    {
+        cin>>arr[i];
+    }
+    cin>>m;
+    int ans = searching(arr , n, m, n);
+    if (ans > (n-1))
+    {
+        cout<<"-1";
+    }
+    else
+    {
+        cout<<(n-1-ans);
+    }
+}
+
+
+------------------------------------------------
+
+//string to integer
+
+#include <iostream>
+using namespace std;
+
+void string_to_int(char *str, int n )
+{
+    //Base Case
+    if(str[0] == '\0' )
+    {
+        return;
+    }
+
+    //Rec Case
+    else
+    {
+        char new_str[1] ={str[0]};
+        cout<< atoi(new_str);
+    }
+    return string_to_int(str+1 , n-1);
+
+}
+
+int main() 
+{
+    char s[100];
+    int n= 100;
+    cin>>s;
+    string_to_int(s,n);
+    return 0;
+    
+}
+
+
+------------------------------------------------
+
+//insert * between duplicates
+
+#include <iostream>
+using namespace std;
+
+string duplicate(string str , int n)
+{
+    //Base case
+    if (n == 1)
+    {
+        return str;
+    }
+    //Rec case
+    if(str.at(1) == str.at(0))
+    {
+        return (string(1,str.at(0)) + "*" + duplicate(str.substr(1,n-1) , n-1 ));
+    }
+    else
+    {
+        return (string(1,str.at(0)) + duplicate(str.substr(1,n-1) , n-1));
+    }
+}
+
+int main() 
+{
+    string s;
+    cin>>s;
+    int n = s.length();
+    cout<<duplicate(s,n);
+}
+
+
+------------------------------------------------
+
+//string S. Remove all duplicates
+#include <iostream>
+using namespace std;
+
+string remove_dup(string S, int n){
+    n = S.length();
+    if(n == 1){
+        return S;
+    }
+    else if(S[0] == S[1]){
+        return (remove_dup(S.substr(1,n-1), n-1));
+    }
+    else{
+        return (string(1, S[0]) + remove_dup(S.substr(1,n-1), n-1));
+    }
+}
+
+int main() {
+
+    string S;
+    cin>>S;
+    int n;
+    cout<<remove_dup(S, n);
+    return 0;
+}
+
+
+------------------------------------------------
+
+//Take as input N, the size of array. Take N more inputs and store that in an array. Take as input M, a number. Write a recursive function which returns an array containing indices of all items in the array which have value equal to M. Print all the values in the returned array.
+#include <iostream>
+using namespace std;
+
+void index_of_m(int *a, int n1, int m, int n)
+{
+    //Base case
+    if(n1==0)
+    {
+        return;
+    }
+    //Rec Case
+    else if(a[0] == m)
+    {
+        cout<<n-n1<<" ";
+        return index_of_m(a+1, n1-1, m, n);
+    }
+    else
+    {
+        return index_of_m(a+1, n1-1, m, n);
+    }
+
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for (int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    int m;
+    cin>>m;
+    index_of_m(arr, n, m, n);
+    return 0;
+}
+
+
+------------------------------------------------
+
+//Tower Of Hanoi
+
+#include <iostream>
+using namespace std;
+void toh(char scr, char helper, char dest, int n)
+{
+    if(n==0)
+    {
+        return;
+    }
+    toh(scr, dest, helper, n-1);
+    cout<<"Moving ring "<<n<<" from "<<scr<<" to "<<dest<<endl;
+    toh(helper, scr, dest, n-1);
+}
+
+
+int main() 
+{
+    int n;
+    cin>>n;
+    toh('A','C','B',n);
+    return 0;
+}
+
+
+------------------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//Tiling Problem 2
+#include <iostream>
+using namespace std;
+
+int tiling(int n, int m)
+{
+    if(n<=0 or m<=0)
+    {
+        return 0;
+    }
+    else if (n<m)
+    {
+        return 1;
+    }
+    else if(n==m)
+    {
+        return 2;
+    }
+    else
+    {
+        return (tiling(n-1 , m) + tiling(n-m , m));
+    }
+}
+
+int main() 
+{
+    int t,n,m;
+    cin>>t;
+	while(t>0)
+	{
+		cin>>n>>m;
+    	cout<<tiling(n,m)<<endl;
+		t--;
+	}
+	return 0;
+}
+
+
+------------------------------------------------
+
+//Take as input str, a string. We are concerned with all the possible subsequences of str. E.g.
+
+a. Write a recursive function which returns the count of subsequences for a given string. Print the value returned.
+
+b. Write a recursive function which prints all possible subsequences for a “abcd” has following subsequences “”, “d”, “c”, “cd”, “b”, “bd”, “bc”, “bcd”, “a”, “ad”, “ac”, “acd”, “ab”, “abd”, “abc”, “abcd”.given string (void is the return type for function). 
+Note: Use cin for input
+
+#include <iostream>
+#include<math.h>
+using namespace std;
+
+void subseq(string s, int n)
+{   
+    if( n == pow(2,s.length()))
+    {
+        return;
+    }
+    string str1 = " ";
+    for(int i=0; i<s.length(); i++)
+    {
+        int temp = n>>i;
+        int bit = temp&1;
+        if(bit == 1)
+        {
+            str1 = s[s.length()-i-1] + str1;
+        }
+    }
+    cout<<str1<<" ";
+    subseq(s,n+1);
+}
+
+int main()
+{
+    string str;
+    cin>>str;
+    subseq(str, 0);
+    cout<<endl;
+    cout<<pow(2,str.length());
+    return 0;
+}
+
+
+------------------------------------------------
+
+//shift all X to end of string
+#include <iostream>
+#include<string.h>
+using namespace std;
+
+string removeall_x(string s, int n)
+{
+    //Base Case
+    if( n == 0)
+    {
+        return s;
+    }
+    else if(s[0] == 'x')
+    {
+        return removeall_x(s.substr(1,s.length()-1), n-1) + "x";
+    }
+    else
+    {
+        return s[0] + removeall_x(s.substr(1,s.length()-1), n-1);
+    }
+}
+
+int main() 
+{
+    string str;
+    cin>>str;
+    int n = str.length();
+    cout<<removeall_x(str, n);
+
+}
+
+-----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//Merge Sort
+#include <iostream>
+using namespace std;
+
+void merge(int *a, int s, int e)
+{
+    int mid = (s+e)/2;
+    int i = s;
+    int j = mid+1;
+    int temp [100];
+    int k = s;
+
+    while(i<=mid and j<=e)
+    {
+        if(a[i]<=a[j])
+        {
+            temp[k] = a[i];
+            k++;
+            i++;
+        }
+        else
+        {
+            temp[k] = a[j];
+            k++;
+            j++;
+        }
+    }
+    while(i<=mid)
+    {
+        temp[k] = a[i];
+        k++;
+        i++;
+    }
+    while(j<=e)
+    {
+        temp[k] = a[j];
+        k++;
+        j++;
+    }
+
+    for(int i =0; i<=e; i++)
+    {
+        a[i] = temp[i];
+    }
+    
+}
+
+void mergeSort(int *a, int s, int e)
+{
+    if(s>=e)
+    {
+        return;
+    }
+    int mid = (s+e)/2;
+    mergeSort(a, s, mid);
+    mergeSort(a, mid+1, e);
+    merge(a, s, e);
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+
+    mergeSort(arr, 0, n-1);
+    for(int i=0; i<n; i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+    return 0;
+}
+
+-----------------------------------------
+GFG
+//Merge Sort
+#include<stdlib.h> 
+#include<stdio.h>
+#include<iostream>
+using namespace std; 
+
+void merge(int arr[], int l, int m, int r) 
+{ 
+	int i, j, k; 
+	int n1 = m - l + 1; 
+	int n2 = r - m; 
+
+	/* create temp arrays */
+	int L[n1], R[n2]; 
+
+	/* Copy data to temp arrays L[] and R[] */
+	for (i = 0; i < n1; i++) 
+		L[i] = arr[l + i]; 
+	for (j = 0; j < n2; j++) 
+		R[j] = arr[m + 1+ j]; 
+
+	/* Merge the temp arrays back into arr[l..r]*/
+	i = 0; // Initial index of first subarray 
+	j = 0; // Initial index of second subarray 
+	k = l; // Initial index of merged subarray 
+	while (i < n1 && j < n2) 
+	{ 
+		if (L[i] <= R[j]) 
+		{ 
+			arr[k] = L[i]; 
+			i++; 
+		} 
+		else
+		{ 
+			arr[k] = R[j]; 
+			j++; 
+		} 
+		k++; 
+	} 
+
+	/* Copy the remaining elements of L[], if there 
+	are any */
+	while (i < n1) 
+	{ 
+		arr[k] = L[i]; 
+		i++; 
+		k++; 
+	} 
+
+	/* Copy the remaining elements of R[], if there 
+	are any */
+	while (j < n2) 
+	{ 
+		arr[k] = R[j]; 
+		j++; 
+		k++; 
+	} 
+} 
+
+/* l is for left index and r is right index of the 
+sub-array of arr to be sorted */
+void mergeSort(int arr[], int l, int r) 
+{ 
+	if (l < r) 
+	{
+		int m = (l+r)/2; 
+		mergeSort(arr, l, m); 
+		mergeSort(arr, m+1, r); 
+		merge(arr, l, m, r); 
+	} 
+} 
+
+int main() 
+{
+    int n;
+    cin>>n;
+	int arr[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    } 
+	mergeSort(arr, 0, n-1);
+    for(int i=0; i<n; i++)
+    {
+        cout<<arr[i]<<" ";
+    } 
+	return 0; 
+}
+
+--------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//Quick Sort
+#include <iostream>
+using namespace std;
+
+void swap(int* a, int* b) 
+{ 
+    int t = *a; 
+    *a = *b; 
+    *b = t; 
+}
+
+int partition(int *a, int p, int e)
+{
+    int pivot = a[p];
+    int i = p;
+    int j = e;
+    while(i<j)
+    {
+        do
+        {
+            i++;
+        }while(a[i] <= pivot);
+
+        do
+        {
+            j--;
+        }while(a[j] > pivot);
+
+        if(i<j)
+        swap(a[i] , a[j]);
+    }
+    swap(a[p], a[j]);
+    return j;
+}
+
+void quicksort(int *a , int p, int e)
+{
+    if(p==e)
+    {
+        return;
+    }
+
+    else if(p<e)
+    {
+        int j = partition(a , p , e);
+        quicksort(a, p, j);
+        quicksort(a, j+1, e);
+    }
+    else
+    {
+        return;
+    }
+
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    quicksort(arr , 0 , n);
+
+    for(int i=0; i<n; i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+}
+
+-------------------------------------------
+
+//Smart Keypad 1
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+set<string> set1;
+set<string> set2;
+
+string table[] = { " ", ".+@$", "abc", "def", "ghi", "jkl" , "mno", "pqrs" , "tuv", "wxyz" };
+
+void print_all_combos(string s)
+{
+	if(s.length() == 0)
+	{
+		return;
+	}
+	else
+	{
+		int index2 = stoi(string(1,s[0]));
+		string temp = table[index2];
+		for(auto i:set1)
+		{
+			for(int j=0; j<temp.length(); j++)
+			{
+				string new1 = i + string(1,temp.at(j));
+				set2.insert(new1);
+			}
+		}
+		set1.clear();
+		for(auto i:set2)
+		{
+			set1.insert(i);
+		}
+		set2.clear();
+		print_all_combos(s.substr(1,s.length()-1));
+	}
+	
+
+}
+
+int main()
+{
+	string s;
+	cin>>s;
+	int initial = stoi(string(1,s[0]));
+	for(int i=0; i<table[initial].length(); i++)
+	{
+		set1.insert(string(1,table[initial].at(i)));
+	}
+	print_all_combos(s.substr(1,s.length()-1));
+	for(auto i:set1)
+	{
+		cout<<i<<endl;
+	}
+	return 0;
+
+}
+
+--------------------------------------------------
+//REcursion Keypad Codes
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<string> set1;
+vector<string> set2;
+
+string table[] = { " ", "abc", "def", "ghi", "jkl" , "mno", "pqrs" , "tuv", "wx", "yz" };
+
+void print_all_combos(string s)
+{
+	if(s.length() == 0)
+	{
+		return;
+	}
+	else
+	{
+		int index2 = stoi(string(1,s[0]));
+		string temp = table[index2];
+		for(auto i:set1)
+		{
+			for(int j=0; j<temp.length(); j++)
+			{
+				string new1 = i + string(1,temp.at(j));
+				set2.push_back(new1);
+			}
+		}
+		set1.clear();
+		for(auto i:set2)
+		{
+			set1.push_back(i);
+		}
+		set2.clear();
+		print_all_combos(s.substr(1,s.length()-1));
+	}
+	
+
+}
+
+int main()
+{
+	string s;
+	cin>>s;
+	int initial = stoi(string(1,s[0]));
+	for(int i=0; i<table[initial].length(); i++)
+	{
+		set1.push_back(string(1,table[initial].at(i)));
+	}
+	print_all_combos(s.substr(1,s.length()-1));
+	for(auto i:set1)
+	{
+		cout<<i<<" ";
+	}
+    cout<<endl<<set1.size();
+	return 0;
+
+}
+
+-------------------------------------------------
+
+//

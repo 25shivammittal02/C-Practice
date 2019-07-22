@@ -1,0 +1,109 @@
+//Rain Water Preservation
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+    cin>>n;
+    int main_arr[n], left_arr[n], right_arr[n];
+    for(int i=0; i<n;i++)
+    {
+        cin>>main_arr[i];
+    }
+    int max1 = main_arr[0];
+    for(int i=0; i<n; i++)
+    {
+        if(main_arr[i]>max1)
+        {
+            max1 = main_arr[i];
+        }
+        left_arr[i] = max1;
+    }
+    int max2 = main_arr[n-1];
+    for(int i = n-1; i>=0; i--)
+    {
+        if(main_arr[i]> max2)
+        {
+            max2 = main_arr[i];
+        }
+        right_arr[i] = max2;
+    }
+    int sum = 0;
+    for(int i=0; i<n; i++)
+    {
+        sum = sum + (min(left_arr[i] , right_arr[i]) - main_arr[i] );
+    }
+    cout<<sum;
+    return 0;
+}
+
+-----------------------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//Read pages from book
+#include <iostream>
+using namespace std;
+
+int student = 0;
+
+bool can_Assign(int *a, int n, int mid, int s)
+{
+    int i=0;
+    while(i<=n-1)
+    {
+        int sum = 0;
+        while(sum<=mid and i<=n-1)
+        {
+            sum = sum + a[i];
+            i++;
+        }
+        i--;
+        student = student +1;
+    }
+    if (student >= s)
+        return true;
+    else
+        return false;      
+}
+
+int main() 
+{
+    int n;
+    cin>>n;
+    int stud;
+    cin>>stud;
+    int arr[n];
+    int sum =0;
+    for(int i=0;i<n;i++)
+    {
+        cin>>arr[i];
+        sum = sum + arr[i];
+    }
+    int s=0;
+    int e= sum;
+    int ans = 0;
+
+    while(s<=e)
+    {
+        int mid = (s+e)/2;
+        if(can_Assign(arr, n, mid, stud) == 1)
+        {
+            ans = mid;
+            s = mid + 1;
+        }
+        else
+        {
+            e= mid -1;
+        }
+    }
+    cout<<ans;
+}
+
+//4 2
+//10 20 30 40
+
+------------------------------------------------------
+
+//

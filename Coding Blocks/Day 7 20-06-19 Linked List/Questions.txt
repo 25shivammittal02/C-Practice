@@ -1,0 +1,535 @@
+Delete C node
+
+detect cyce, and remove it
+floyd's algo
+
+XOR LL over Dubly LL
+can't traverse from middle
+but save memory than Doubly
+
+
+#include <iostream>
+#include <stack>
+#include<math.h>
+using namespace std;
+
+class node
+{
+    public:
+    int key;
+    node *next;
+    //Node(int d) : data(d),next(NULL){}  //initialisation list, if there is constant data.
+    node (int d)
+    {
+        key = d;
+        next = NULL;
+    }
+    // ~Node() //recursive call, destructor
+    // {
+    //     // if(next!=NULL)
+    //     // {
+    //     //     delete next;  
+    //     // }
+    //     cout<<"deleting node "<<data<<" ";
+    // }
+};
+
+void insertAtHead(node *&head, int key)
+{
+    if(head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = new node(key);
+        ptr->next = head;
+        head = ptr;
+        return;
+    }
+}
+
+void insertAtMiddle(node *&head, int key, int pos )
+{
+    if(pos == 1)
+    {
+        insertAtHead(head, key);
+        return;
+    }
+    else
+    {
+        node *ptr=head;
+        for(int i=1; i<pos-1;i++)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        n->next = ptr->next;
+        ptr->next = n;
+        return;
+    }
+}
+
+void insertAtEnd (node *&head, int key)
+{
+    if (head==NULL)
+    {
+        head = new node(key);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        node *n = new node(key);
+        ptr->next = n;
+    }
+}
+
+void deleteHead(node *&head)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    else
+    {
+        node *deletedNode = head;
+        head = head->next;
+        delete deletedNode;
+        return;
+    }
+}
+
+void deleteFrommiddle(node *&head, int p)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    else if(p == 1)
+    {
+        deleteHead(head);
+        return;
+    }
+    else
+    {
+        node *ptr = head;
+        node *prev = ptr;
+        for(int i=1; i<p; i++)
+        {
+            prev = ptr;
+            ptr = ptr->next;
+
+        }
+        prev->next  = ptr->next;
+        ptr->next = NULL;
+        delete ptr;
+        return;
+    }
+}
+
+void deleteLL(node *&head)
+{
+    while(head !=NULL)
+    {
+        node *deletedNode = head;
+        head = head->next;
+        delete deletedNode;
+    }
+    return;
+}
+
+int searchIndex(node *&head, int index, int n)
+{
+    if(head==NULL)
+    {
+        return -1; 
+    }
+    else
+    {
+        if(head->key == n)
+        {
+            return index;
+        }
+        else
+        {
+            return searchIndex(head->next, index+1, n);
+        }
+    }
+}
+
+node* reverseLL(node *head, node *prev)
+{
+    if(head->next==NULL or head==NULL)
+    {
+        head->next = prev;
+        return head;
+    }
+    else
+    {
+        node *temp = head->next;
+        head->next = prev;
+        reverseLL(temp,head);
+    }
+}
+
+node* mergeLL(node *head1, node *head2)
+{
+    if(head1 == NULL)
+    {
+        return head2;
+    }
+    if(head2 == NULL)
+    {
+        return head1;
+    }
+    node *newhead;
+    if(head1->key <= head2->key)
+    {
+        newhead = head1;
+        newhead->next = mergeLL(head1->next, head2);
+    }
+    else
+    {
+        newhead = head2;
+        newhead->next = mergeLL(head1, head2->next);
+    }
+    return newhead;
+}
+
+node* findMid(node *head)
+{
+    node *slow = head;
+    node *fast = head->next;
+    while(fast!=NULL and fast->next!=NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}  
+
+node *mergeSort(node *head)
+{
+    if(head==NULL or head->next == NULL)
+    {
+        return head;
+    }
+    node *mid = findMid(head);
+    node *first = head;
+    node *second = mid->next;
+    mid->next = NULL;
+    first = mergeSort(first);
+    second = mergeSort (second);
+    return mergeLL(first, second);
+}
+
+void findLoop(node *head) // Floyd’s Cycle detection algorithm
+{
+    node *slow = head;
+    node *fast = head;
+    while(slow!=NULL and fast!=NULL and fast->next!=NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast)
+        {
+            cout<<"Loop Found";
+            return;
+        }
+    }
+    cout<<"Loop Not Found";
+    return;
+}
+
+void countNodesInLoop(node *head)
+{
+    node *slow = head;
+    node *fast = head;
+    while(slow!=NULL and fast!=NULL and fast->next!=NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast)
+        {
+            break;
+        }
+    }
+    if(slow == fast)
+    {
+        slow =head;
+        while(slow!=fast)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        int count=0;
+        slow = slow->next;
+        count = count +1;
+        while(slow!=fast)
+        {
+            slow= slow->next;
+            count++;
+        }
+        cout<<count;
+        return;
+    }
+    else
+    {
+        cout<<"No loop found"<<endl;
+        return;
+    }
+}
+
+void printLL(node *head)
+{
+    if(head == NULL)
+    {
+        cout<<"Empty";
+        return;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->key<<"->";
+        ptr = ptr->next;
+    }
+}
+
+bool isPalindrome(node *head)
+{
+    if(head == NULL or head->next == NULL)
+    {
+        return true;
+    }
+    node *slow = head;
+    node *fast = head->next;
+    while(fast!=NULL and fast->next!=NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    node *reversedLL = reverseLL(slow->next, NULL);
+    slow->next = reversedLL;
+    //traversing again to find mid;
+    slow = head;
+    fast = head->next;
+    
+    while(fast!=NULL and fast->next!=NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    if(fast!=NULL)
+    {
+        node *ptr= head;
+        while(ptr!=slow->next)
+        {
+            if(ptr->key != reversedLL->key)
+            {
+                return false;
+            }
+            else
+            {
+                ptr = ptr->next;
+                reversedLL = reversedLL->next;
+            }
+        }
+        return true;
+    }
+    else
+    {
+        node *ptr = head;
+        while(ptr!=slow)
+        {
+            if(ptr->key != reversedLL->key)
+            {
+                return false;
+            }
+            else
+            {
+                ptr = ptr->next;
+                reversedLL = reversedLL->next;
+            }
+        }
+        return true;
+    }
+}
+
+int isPalin(node* head)
+{ 
+          
+    node *slow = head; 
+    stack <int> s; 
+    int i; 
+    int ans = 1;
+    while(slow != NULL)
+    { 
+        s.push(slow->key); 
+        slow = slow->next; 
+    }
+    node *ptr = head;
+    while(ptr != NULL )
+    { 
+     
+        i=s.top(); 
+        s.pop(); 
+        if(ptr->key == i)
+        {
+            ans = 1; 
+        }
+        else
+        {
+            ans = 0;
+            break; 
+        } 
+       ptr=ptr->next; 
+    }
+return ans; 
+}
+
+int getcount(node *head)
+{
+    int cnt = 0;
+    if(head==NULL)
+    {
+        return cnt;
+    }
+    node *ptr = head;
+    while(ptr!=NULL)
+    {
+        cnt = cnt +1;
+        ptr = ptr->next;
+    }
+    return cnt;
+}
+
+int getintersection(int d, node *large, node *small)
+{
+    node* current1 = large;  
+    node* current2 = small;  
+    
+    int cnt =0;
+    while(cnt!=d)
+    {
+        cnt = cnt+1;
+        current1 = current1->next;  
+    }
+      
+    while(current1 != NULL && current2 != NULL)  
+    {  
+        if(current1 == current2)  
+        return current1->key;  
+        current1 = current1->next;  
+        current2 = current2->next;  
+    }  
+    return -1;
+}
+
+int main() 
+{
+    
+    int n=5;
+    node *head = NULL;
+    for(int i=1;i<n;i++)
+    {
+        insertAtHead(head,i*2);
+    }
+    cout<<"Orignal LL ";
+    printLL(head);
+    /*
+    insertAtEnd(head, 1);
+    cout<<endl<<"LL After insertion at end ";
+    printLL(head);
+    insertAtMiddle(head, 3,4);
+    cout<<endl<<"LL After insertion at middle ";
+    printLL(head);
+    deleteHead(head);
+    cout<<endl<<"LL After deleting head ";
+    printLL(head);
+    deleteFrommiddle(head, 3);
+    cout<<endl<<"LL After deleting from Middle ";
+    printLL(head);
+    // deleteLL(head);
+    // cout<<endl<<"After deletion of LL = ";
+    // printLL(head);
+    int fountAt= searchIndex(head, 1,0);
+    cout<<endl<<"Found at index "<<fountAt;
+    head = reverseLL(head, NULL);
+    cout<<endl<<"LL After Reversal ";
+    printLL(head);
+    node *head2 = NULL;
+    for(int i=n;i>=0;i--)
+    {
+        insertAtHead(head2,i*3);
+    }
+    cout<<endl<<"2nd LL ";
+    printLL(head2);
+    node *ans = mergeLL(head, head2);
+    cout<<endl<<"LL After Merging ";
+    printLL(ans);
+    node *head3 = NULL;
+    insertAtHead(head3, 8);
+    insertAtHead(head3, 7);
+    insertAtHead(head3, 4);
+    insertAtHead(head3, 1);
+    insertAtHead(head3, 12);
+    insertAtHead(head3, 10);
+    insertAtHead(head3, 2);
+    insertAtHead(head3, 0);
+    cout<<endl<<"LL Before MergSorting ";
+    printLL(head3);
+    mergeSort(head3);
+    cout<<endl<<"LL After MergSorting ";
+    printLL(head3);
+
+    node *head2 = NULL;
+    insertAtEnd(head2,20);
+    insertAtEnd(head2,4);
+    insertAtEnd(head2,15);
+    insertAtEnd(head2,10);
+    cout<<endl;
+    head2->next->next->next->next = head2->next; 
+    countNodesInLoop(head2);
+    
+    node *head4 = NULL;
+    insertAtEnd(head4,20);
+    insertAtEnd(head4,4);
+    insertAtEnd(head4,6);
+    insertAtEnd(head4,4);
+    insertAtEnd(head4,20);
+    
+//  int a = isPalin(head4); //stack Method
+    int a = isPalindrome(head4);
+    cout<<a;
+    
+    node *head5 = NULL;
+    insertAtEnd(head5,10);
+    insertAtEnd(head5,11);
+    insertAtEnd(head5,12);
+    head5->next->next->next = head->next->next;
+    cout<<"2nd LL"<<endl;
+    printLL(head5);
+    int c1 = getcount(head);
+    int c2 = getcount(head5);
+    cout<<c1<<" "<<c2;
+    int d= abs(c1-c2);
+    if(c1>=c2){
+        cout<<getintersection(d,head,head5);
+    }
+    else
+    {
+        cout<<getintersection(d,head5,head);
+    }
+    */
+    
+    return 0;
+    
+}

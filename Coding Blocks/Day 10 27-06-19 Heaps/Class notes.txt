@@ -1,0 +1,380 @@
+//Basic Heaps
+/*
+1) 	it is a complete binary tree(CBT), all levels filled, except last level can be left unfilled with filling from left to right
+2) 	order property-> Min heap-> parent < children or Max heap-> parent>children
+3) 	insertin-> O(log n) =>{height of BCT id log n };
+4) 	deletion -> O(log n)
+5) 	get_min, remove_min; O(k log n); (used when asked to find largest 10, top 5 students etc..)
+6) 	visualized as binary tree, but implemented as array data structure.
+7) 	index of children (parent_index*2 and parent_index*2 +1);
+8) 	get the max element -> O(1);
+9) 	remove min element -> O(log n);
+ 
+*/
+
+
+#include <iostream>
+#include<queue> //priority queue->uses heap
+#include<stack>
+#include<bits/stdc++.h>
+using namespace std;
+
+class  heap
+{
+	vector<int> v;
+	bool heapTypeMin;
+	bool compare(int a, int b)
+	{
+		if(heapTypeMin==false)
+		{
+			return a<b;
+		}
+		else
+		{
+			return a>b;
+		}
+	}
+
+	void heapify(int index)
+	{
+		int left = 2*index;
+		int right = 2*index +1;
+
+		int last_index = v.size() -1;
+		int max_index = index;
+		if(left<=last_index and compare (v[index] , v[left]) )
+		{
+			max_index = left;
+		}
+		if(right<=last_index and compare (v[max_index] , v[right]) )
+		{
+			max_index = right;
+		}
+		if(max_index != index)
+		{
+			swap(v[index] , v[max_index]);
+			heapify(max_index);
+		}
+	}
+public:
+	heap(int defaultsize=10, bool ht=true)
+	{
+		v.reserve(defaultsize+1);
+		v.push_back(-1); //block the 0th index;
+		heapTypeMin = ht;
+	}
+	void push(int data)
+	{
+		v.push_back(data);
+		int index = v.size()-1;
+		int parent = index/2;
+		while(index >1 and compare(v[parent] , v[index]))
+		{
+			swap(v[parent] , v[index]);
+			index = parent;
+			parent = parent/2;
+		}
+	}
+	//get min/max
+	int getTop()
+	{
+		return v[1];
+	}
+	//Remove min/max
+	void pop()
+	{
+		//swap first n last
+		int last = v.size() -1;
+		swap(v[1] , v[last]);
+		//remove the last node
+		v.pop_back();
+		//heapify
+		heapify(1);
+	}
+	bool empty()
+	{
+		return v.size() == 1;
+	}
+};
+
+void heapifyII(int *arr, int i, int n)
+{
+	int left = i<<1;
+	int right = left +1;
+
+	int max_index = i;
+	if(left<n and arr[i]<arr[left])
+	{
+		max_index = right;
+	}
+	if(right<n and arr[max_index]<arr[right])
+	{
+		max_index = right;
+	}
+	if(i!=max_index)
+	{
+		swap(arr[i], arr[max_index]);
+		heapifyII(arr, max_index ,n);
+	}
+}
+
+class compare
+{
+public:
+	bool operator()(int a, int b)
+	{
+		//return a<b; //Max Heap
+		return a>b; //Min Heap
+	}
+};
+
+int main()
+{
+	/*
+	int d;
+	cin>>d;
+	heap h;
+	while(d!=-1)
+	{
+		h.push(d);
+		cin>>d;
+	}
+	while(!h.empty())
+	{
+		cout<<h.getTop()<<" ";
+		h.pop();
+	}
+
+	//Heapify method II (conver ant array to heap)
+	int arr[7] = {-1,5,4,1,2,3,0};
+	int n= 7;
+
+	//convert aray into heap; -> O(n);
+	for(int i=n/2;i>=1;i--)
+	{
+		heapifyII(arr,i,n);
+	}
+	for(int i=0;i<n;i++)
+	{
+		cout<<arr[i]<<" ";
+	}
+	*/
+
+	//USING PRIORITY QUEUE
+	// By default makes a Max_heap
+	//priority_queue<int,vector<int>, greater<int> > h; //makes it Min heap greater<int>
+	priority_queue<int> h; //makes Max heap by default
+	//priority_queue<int,vector<int>, compare > h; //custom made comparator
+	int arr[] = {1,3,2,5,0,8,7};
+	int n= sizeof(arr) / sizeof(arr[0]);
+
+	for(int i=0;i<n;i++)
+	{
+		h.push(arr[i]);
+	}
+	//Pop while not empty
+	while(!h.empty())
+	{
+		cout<<h.top()<<" ";
+		h.pop();
+	}
+	return 0;
+
+	// 6 3 7 4 2 1 8 -1
+}
+
+----------------------------------------------------------------
+
+//Fruits
+
+#include <iostream>
+#include<queue>
+using namespace std;
+
+class fruit
+{
+
+public:
+	string name;
+	int price;
+
+	fruit() ////imp to declare // default constructor
+	{
+
+	}
+	fruit(string n, int p)
+	{
+		name = n;
+		price = p;
+	}
+	bool operator()(fruit a, fruit b)
+	{
+		return a.price>b.price;
+	}	
+};
+
+int main()
+{
+	priority_queue<fruit,vector<fruit>, fruit > h;
+	for(int i=0;i<5;i++)
+	{
+		string s;
+		int price;
+		cout<<"enter fruit name and price"<<endl;
+		cin>>s>>price;
+		fruit f(s,price);
+		h.push(f);
+
+	}
+	while(!h.empty())
+	{
+		fruit top1(h.top());
+		cout<<top1.name<<" "<<top1.price<<endl;
+		h.pop();
+	}
+	return 0;
+	// apple 200
+	// mango 180
+	// banana 60
+	// guava 50
+}
+
+----------------------------------------------------------------
+
+//fruits
+//Sets are implememted using BST
+//if whole object is same then it takes it as dublicate, otherwise if any attribute is different, it will treat it as different
+//ordered multiset, un-ordered multiset
+
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class fruit
+{
+
+public:
+	string name;
+	int price;
+
+	fruit() //imp to declare // default constructor
+	{
+
+	}
+	fruit(string n, int p)
+	{
+		name = n;
+		price = p;
+	}
+	bool operator()(fruit a, fruit b)
+	{
+		if(a.price == b.price)
+		{
+			return a.name<b.name;
+		}
+		return a.price<b.price;
+	}	
+};
+
+int main()
+{
+	//priority_queue<fruit,vector<fruit>, fruit > h;
+	set<fruit, fruit > h;
+	for(int i=0;i<4;i++)
+	{
+		string s;
+		int price;
+		cin>>s>>price;
+		fruit f(s,price);
+		h.insert(f);
+
+	}
+	for(auto i:h)
+	{
+		cout<<i.name<<" "<<i.price<<endl;
+	}
+	return 0;
+
+	// apple 200
+	// mango 180
+	// banana 60
+	// banana 200
+}
+
+----------------------------------------------------------------
+
+//MinHeap
+#include <iostream>
+#include <queue>
+#include <vector>
+using namespace std;
+    
+void printHeap(priority_queue<int, vector<int>, greater<int> > h){
+    while(!h.empty()){
+            cout<<h.top()<<" ";
+            h.pop();
+    }
+    cout<<endl;
+}
+
+int main() {
+    priority_queue<int, vector<int>, greater<int> > h; //By default maxHeap - to use minHeap use two more parameters vector and greater<int>
+    int no;
+    int count = 0;
+    int k = 3;
+    while(scanf("%d", &no) != EOF)
+    { //EOF ascii value is -1 and its a special a marker to check end of a file
+        if(no == -1)
+        {
+            //Query
+            //Print the heap
+            printHeap(h);
+
+        }
+        else
+        {
+            if(count<k)
+            {
+                h.push(no);
+                count++;
+            }
+            else
+            {
+                if(no>h.top())
+                {
+                    h.pop();
+                    h.push(no);
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+----------------------------------------------------------------
+
+//operator Overloading
+#include <iostream>
+using namespace std;
+
+class dog
+{
+public:
+	void operator()(int a, int b)
+	{
+		cout<<"In Dog operator()"<<endl;
+		cout<<"Compoaring "<<a<<"and "<<b<<endl;
+	}
+};
+
+int main(int argc, char const *argv[])
+{
+	dog funnydog; //Functional Object, also called functor
+	funnydog(1,2); //Operator overloading
+	return 0;
+}
+
+----------------------------------------------------------------
+
+//

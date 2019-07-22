@@ -1,0 +1,79 @@
+birthday paradox (atleast 2 have bday on same date)
+if p=1, cout<<366
+-----------------------------------------
+Incredible hulk
+hulk jumps in power of 2, count the min number of moves to reach Nth floor.
+------------------------------------------
+unique number
+array has all number twice, but 1 number single
+sol-> XOR of all numbers
+a^b^a= a^a^b= b
+
+int main()
+{
+	int arr[]= { 4,2,1,1,4,2,5];
+	int uni = 0;
+	for (int i=0; i<n; i++)
+	uni = uni^arr[i];
+	
+	cout<<uni<<endl;
+}
+
+------------------------------------------
+Quest) if there are 2 unique numbers
+Sol->
+XOR all
+select any set bit
+check all the bits which have set bit at the same position as this XOR has.
+now divide the array into set of two, which have set bit as 1, n other as 0 (using AND)
+XOR of first array.
+1st number is extracted.
+XOR the first with the XOR obtained previously
+2nd number is obtained.
+
+
+int main()
+{
+	int arr[]= { 4,2,1,1,4,7,5,5};
+	int n= sizeof(arr)/ sizeof(arr[0]);
+	int sabka_xor =0;
+	for (int i=0; i<n; i++)
+	uni = uni^arr[i];
+	
+	cout<<uni<<endl;
+}
+
+
+------------------------------------------
+Quest) if there is 1 unique number, rest all r repeated 3 times (2N+1)
+Sol->
+
+
+
+------------------------------------------
+Quest) convert one number to another binary, count the number of changes to be done
+Sol-> cout<<_builtin_popcount(a^b)
+
+------------------------------------------
+Quest) n= 1000000000
+	m=10101
+i=2, j=6
+n= 1001010100
+
+Sol->
+AND with 1110000011
+m<<i
+OR with m
+
+break into 2 parts 11100000 and 11
+~0 = 111111111111111111
+
+------------------------------------------
+Quest) print the next smallest n next largest with same number of 1
+
+
+------------------------------------------
+Sum of XOR of all sub-arrays
+
+------------------------------------------
+

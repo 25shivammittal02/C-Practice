@@ -37,5 +37,5 @@ int main()
 
 /*
 Sample Inputs
-
+10
 */

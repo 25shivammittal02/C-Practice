@@ -1,45 +1,44 @@
-#include<iostream>
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-class Stack
-{
+//Implementation of Stack Data Structure using Vector
+
+template<typename T,typename U>
+class Stack{
 private:
-    vector<int> v;
+    vector<T> v; 
+    vector<U> v2;   
 public:
-    void push(int data)
-    {
+    void push(T data){
         v.push_back(data);
     }
-    void pop()
-    {
-        if(!empty())
-        v.pop_back();
-    }
-    bool empty()
-    {
+    bool empty(){
         return v.size()==0;
     }
-    int top()
-    {
+    void pop(){
+        if(!empty()){
+             v.pop_back();
+        }
+    }
+    T top(){
         return v[v.size()-1];
     }
 };
 
-int main()
-{
-    Stack s;
-    for(int i=1;i<=5;i++)
-    {
-        s.push(i*i);
-    }
+int main() {
+    Stack<char,int> s;
 
-    while(!s.empty())
-    {
+    for(int i=65;i<=70;i++){
+        s.push(i);
+    }
+    //Try to print the content of the stack by popping each element
+    while(!s.empty()){
         cout<<s.top()<<endl;
         s.pop();
     }
+
+
+    
+return 0;
 }
-/*
-Sample test case
-*/

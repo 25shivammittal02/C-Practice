@@ -1,3 +1,5 @@
+//O(n*log(log(n)))
+//https://www.geeksforgeeks.org/sieve-of-eratosthenes/
 #include<iostream>
 #include<bits/stdc++.h>
 using namespace std;
@@ -37,5 +39,5 @@ int main()
 
 /*
 Sample Inputs
-10
+
 */

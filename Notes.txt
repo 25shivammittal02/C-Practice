@@ -1,0 +1,243 @@
+String
+
+Input Functions
+
+1. getline() :- This function is used to store a stream of characters as entered by the user in the object memory.
+		getline(cin,str);
+2. push_back() :- This function is used to input a character at the end of the string.
+		str.push_back('s');
+3. pop_back() :- Introduced from C++11(for strings), this function is used to delete the last character from the string.
+		str.pop_back();
+4. capacity() :- This function returns the capacity allocated to the string, which can be equal to or more than the size of the string. Additional space is allocated so that when the new characters are added to the string, the operations can be done efficiently.
+		str.capacity()
+5. resize() :- This function changes the size of string, the size can be increased or decreased.
+		str.resize()
+6.shrink_to_fit() :- This function decreases the capacity of the string and makes it equal to its size. This operation is useful to save additional memory if we are sure that no further addition of characters have to be made.
+
+7. begin() :- This function returns an iterator to beginning of the string.
+
+8. end() :- This function returns an iterator to end of the string.
+
+9. rbegin() :- This function returns a reverse iterator pointing at the end of string.
+
+10. rend() :- This function returns a reverse iterator pointing at beginning of string.
+
+11. copy(“char array”, len, pos) :- This function copies the substring in target character array mentioned in its arguments. It takes 3 arguments, target char array, length to be copied and starting position in string to start copying.
+		str1.copy(ch,13,0);
+12. swap() :- This function swaps one string with other.
+
+13. strtok() :- Splits str[] according to given delimiters and returns next token. It needs to be called in a loop to get all tokens. It returns NULL when there are no more tokens.
+		char * strtok(char str[], const char *delims);
+14. reverse(s.begin(), s.end())
+
+
+toupper / tolower=>
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    string s;
+    s= "Shivam";
+    for(int i=0;i<s.length();i++)
+    {
+        s[i] = tolower(s[i]);
+    } 
+    cout<<s<<endl;
+    for(int i=0;i<s.length();i++)
+    {
+        s[i] = toupper(s[i]);
+    } 
+    cout<<s;
+}
+
+
+#include <stdio.h> 
+#include <string.h> 
+  
+int main() 
+{ 
+    char str[] = "Geeks-for-Geeks"; 
+  
+    // Returns first token 
+    char* token = strtok(str, "-"); 
+  
+    // Keep printing tokens while one of the 
+    // delimiters present in str[]. 
+    while (token != NULL) { 
+        printf("%s\n", token); 
+        token = strtok(NULL, "-"); 
+    } 
+  
+    return 0; 
+}
+
+
+// appending to string
+#include <iostream>
+#include <string>
+
+int main ()
+{
+  std::string str;
+  std::string str2="Writing ";
+  std::string str3="print 10 and then 5 more";
+
+  // used in the same order as described above:
+  str.append(str2);                       // "Writing "
+  str.append(str3,6,3);                   // "10 "
+  str.append("dots are cool",5);          // "dots "
+  str.append("here: ");                   // "here: "
+  str.append(10u,'.');                    // ".........."
+  str.append(str3.begin()+8,str3.end());  // " and then 5 more"
+  str.append<int>(5,0x2E);                // "....."
+
+  std::cout << str << '\n';
+  return 0;
+}
+
+stoi 	Convert string to integer (function template )
+stol 	Convert string to long int (function template )
+stoul 	Convert string to unsigned integer (function template )
+stoll  Convert string to long long (function template )
+stoull  Convert string to unsigned long long (function template )
+stof 	Convert string to float (function template )
+stod 	Convert string to double (function template )
+stold 	Convert string to long double (function template )
+
+Convert to strings
+to_string 	Convert numerical value to string (function )
+to_wstring 	Convert numerical value to wide string (function )
+
+
+
+Algorithms=>
+
+cout<<min_element(arr, arr+n);
+cout<<max_element(arr, arr+n);
+
+Heaps->
+// range heap example
+#include <iostream>     // std::cout
+#include <algorithm>    // std::make_heap, std::pop_heap, std::push_heap, std::sort_heap
+#include <vector>       // std::vector
+
+bool compare(int a, int b)
+{
+  return a>b; //for min heap
+}
+
+int main () {
+  int myints[] = {10,20,30,5,15};
+  std::vector<int> v(myints,myints+5);
+
+  std::make_heap (v.begin(),v.end(), compare); //Heapify function
+  std::cout << "initial max heap   : " << v.front() << '\n';
+
+  std::pop_heap (v.begin(),v.end()); //moves the top element to last
+  v.pop_back(); //pop the last element
+  std::cout << "max heap after pop : " << v.front() << '\n';
+
+  v.push_back(99); //push element to last
+  std::push_heap (v.begin(),v.end()); //heapify the pushed element
+  std::cout << "max heap after push: " << v.front() << '\n';
+
+  std::sort_heap (v.begin(),v.end()); //heap sort
+
+  std::cout << "final sorted range :";
+  for (unsigned i=0; i<v.size(); i++)
+    std::cout << ' ' << v[i];
+
+  std::cout << '\n';
+
+  return 0;
+}
+
+
+count->
+cout<<count(v.begin(), v.end(), 10);
+
+
+lower and upper bound of->
+cout<<lower_bound (v.begin(), v.end(), 20);
+cout<<upper_bound (v.begin(), v.end(), 20);
+
+merging 2 vector in sorted manner->
+  int first[] = {5,10,15,20,25};
+  int second[] = {50,40,30,20,10};
+  vector<int> v(10);
+
+  sort (first,first+5);
+  sort (second,second+5);
+  merge (first,first+5,second,second+5,v.begin());
+
+reverse->
+reverse(myvector.begin(),myvector.end());
+
+reverse_copy->
+int myints[] ={1,2,3,4,5,6,7,8,9};
+vector<int> myvector;
+myvector.resize(9);    // allocate space
+reverse_copy (myints, myints+9, myvector.begin());
+
+rotate->
+for (int i=1; i<10; ++i) myvector.push_back(i); // 1 2 3 4 5 6 7 8 9
+rotate(myvector.begin(),myvector.begin()+3,myvector.end()); // 4 5 6 7 8 9 1 2 3
+
+includes->
+Returns true if the sorted range [first1,last1) contains all the elements in the sorted range [first2,last2).
+cout<<includes(container,container+10,continent,continent+4);
+
+Set->
+  std::vector<int> v(10);                      // 0  0  0  0  0  0  0  0  0  0
+  std::vector<int>::iterator it;
+  std::sort (first,first+5);     //  5 10 15 20 25
+  std::sort (second,second+5);   // 10 20 30 40 50
+Insertion
+  it=std::set_intersection (first, first+5, second, second+5, v.begin());
+                                               // 10 20 0  0  0  0  0  0  0  0
+  v.resize(it-v.begin());
+Difference
+  it=std::set_difference (first, first+5, second, second+5, v.begin());
+                                               //  5 15 25  0  0  0  0  0  0  0
+  v.resize(it-v.begin());                      //  5 15 25
+Union
+  it=std::set_union (first, first+5, second, second+5, v.begin());
+                                               // 5 10 15 20 25 30 40 50  0  0
+  v.resize(it-v.begin());                      // 5 10 15 20 25 30 40 50
+
+Permutations->
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    set<string> a;
+    string s;
+    cin>>s;
+    sort(s.begin(), s.end());
+    a.insert(s); //insert 1st element
+    while(next_permutation(s.begin(), s.end()))
+    {
+        a.insert(s);
+    }
+    for(auto x:a)
+    {
+        cout<<x<<endl;
+    }
+    cout<<a.size();
+    return 0;
+}
+
+vector=>
+
+v.swap(v2);
+v.clear();
+
+
+cout<<_builtin_popcount(n) << endl; //complxity O(1)
+
+
